@@ -24,6 +24,7 @@ def login(request):
     try:
         user = User.objects.get(email=request.data['email'])
         refresh = RefreshToken.for_user(user)
+        print(refresh.data)
         return api_response(
             success=True,
             message='login successful',
