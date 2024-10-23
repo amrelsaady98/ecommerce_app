@@ -1,0 +1,184 @@
+Table Category {
+  category_id int [pk, increment] // Primary Key
+  name varchar
+  description varchar
+  is_active boolean
+  is_deleted boolean
+}
+
+Table Product {
+  product_id int [pk, increment] // Primary Key
+  code varchar
+  cost_price decimal
+  description varchar
+  image1 varchar
+  is_active boolean
+  is_deleted boolean
+  name varchar
+  our_price decimal
+  sale_price decimal
+  stock_qty int
+  year int
+  category_id int [ref: > Category.category_id] // Foreign Key
+}
+
+Table Product_image {
+  image varchar
+  order int
+  product_id int [ref: > Product.product_id]
+}
+
+Table Order_detail {
+  order_detail_id int [pk, increment] // Primary Key
+  quantity int
+  total_price decimal
+  our_price decimal
+  order_id int [ref: > Orders.order_id] // Foreign Key
+  customer_id int [ref: > Customer.customer_id] // Foreign Key
+  product_id int [ref: > Product.product_id]
+}
+
+Table Orders {
+  order_id int [pk, increment] // Primary Key
+  description varchar
+  delivery_date date
+  grand_total decimal
+  order_date date
+  order_status varchar
+  payment_method varchar
+  shipping_method varchar
+  sub_total decimal
+  tax_rate decimal
+  tax_total decimal
+  customer_id int [ref: > Customer.customer_id] // Foreign Key
+  is_deleted boolean
+  Shipping_address_id int [ref: > Shipping_address.address_id]
+}
+
+Table Customer {
+  customer_id int [pk, increment] // Primary Key
+  address1 varchar
+  address2 varchar
+  city varchar
+  company varchar
+  first_name varchar
+  last_name varchar
+  username varchar
+  password varchar
+  phone varchar
+  postal_code varchar
+  state varchar
+  country_id int [ref: > Country.country_id] // Foreign Key
+  is_deleted boolean
+}
+
+Table User {
+  user_id int [pk, increment] // Primary Key
+  first_name varchar
+  last_name varchar
+  username varchar
+  password varchar
+  is_active boolean
+  is_deleted boolean
+}
+
+Table Role {
+  role_id int [pk, increment] // Primary Key
+  name varchar
+}
+
+Table User_roles {
+  user_id int [ref: > User.user_id] // Foreign Key
+  role_id int [ref: > Role.role_id] // Foreign Key
+}
+
+Table Customer_roles {
+  customer_id int [ref: > Customer.customer_id] // Foreign Key
+  role_id int [ref: > Role.role_id] // Foreign Key
+}
+
+Table Address {
+  address_id int [pk, increment]
+  cutomer_id int [ref: > Customer.customer_id]
+  title varchar
+  line_1 varchar
+  line_2 varchar
+  is_default bool
+  is_deleted bool
+  gov_id int [ref: > Gov.gov_id]
+  city_id int [ref: > City.city_id]
+}
+
+Table Shipping_address {
+  address_id int [pk, increment]
+  title varchar
+  line_1 varchar
+  line_2 varchar
+  is_default bool
+  is_deleted bool
+  gov_id int [ref: > Gov.gov_id]
+  city_id int [ref: > City.city_id]
+}
+
+Table Gov{
+  gov_id int [pk, increment]
+  name varchar
+  is_active bool
+  is_deleted bool
+}
+
+Table City{
+  city_id int [pk, increment]
+  name varchar
+  lat float
+  long float
+  is_deleted bool
+  is_active bool
+  gov_id int [ref: > Gov.gov_id]
+}
+
+
+Table Country {
+  country_id int [pk, increment] // Primary Key
+  code varchar
+  name varchar
+  is_deleted boolean
+}
+
+Table Cart_item {
+  cart_item_id int [pk, increment] // Primary Key
+  our_price decimal
+  quantity int
+  total_price decimal
+  product_id int [ref: > Product.product_id] // Foreign Key
+  shopping_cart_id int [ref: > Shopping_cart.shopping_cart_id] // Foreign Key
+}
+
+Table Shopping_cart {
+  shopping_cart_id int [pk, increment] // Primary Key
+  description varchar
+  grand_total decimal
+  payment_method varchar
+  shipping_method varchar
+  shipping_total decimal
+  sub_total decimal
+  tax_rate decimal
+  tax_total decimal
+  customer_id int [ref: > Customer.customer_id] // Foreign Key
+}
+
+
+
+Ref: "Product"."sale_price" < "Shopping_cart"."sub_total"
+
+
+Refined Module Breakdown:
+
+    Authentication and Roles:
+        Combine user management and roles/permissions management into one app.
+    Customers and Orders:
+        Combine customers, orders, and shopping cart functionality into one app.
+    Products and Categories:
+        Keep product and category management in one app.
+    Locations:
+        Keep country, city, and geographical data in one app.

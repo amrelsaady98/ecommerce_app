@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
     'rest_framework',
     'rest_framework_simplejwt',
     'authentication',
@@ -72,6 +73,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
+    'TOKEN_OBTAIN_SERIALIZER': 'authentication.serializers.MyTokenObtainSerializer',
+
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),

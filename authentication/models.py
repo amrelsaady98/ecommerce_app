@@ -21,6 +21,22 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save()
         return user
+
+    def create_customer(self,  email,password, first_name, last_name, date_of_birth, **kwargs):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            date_of_birth=date_of_birth,
+        )
+
+        user.set_password(password)
+        user.save()
+        return user
+
     def create_superuser(self,  email,password, first_name, last_name, date_of_birth, **kwargs):
         if not email:
             raise ValueError('Users must have an email address')
