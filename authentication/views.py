@@ -18,7 +18,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainSerializer
 
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 @permission_classes((AllowAny,))
 def login(request):
     try:
