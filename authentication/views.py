@@ -25,6 +25,7 @@ def login(request):
         return api_response(
             success=True,
             message='server is running',
+            data=request.data,
             status_code=status.HTTP_200_OK
         )
         # user = User.objects.get(email=request.data['email'])
