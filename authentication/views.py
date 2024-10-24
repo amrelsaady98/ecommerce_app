@@ -22,24 +22,18 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @permission_classes((AllowAny,))
 def login(request):
     try:
+        user = User.objects.get(email=request.data['email'])
+        refresh = RefreshToken.for_user(user)
+        print(refresh.data)
         return api_response(
             success=True,
-            message='server is running',
-            data=request.data,
+            message='login successful',
+            data={
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'user': UserSerializer(user).data},
             status_code=status.HTTP_200_OK
         )
-        # user = User.objects.get(email=request.data['email'])
-        # refresh = RefreshToken.for_user(user)
-        # print(refresh.data)
-        # return api_response(
-        #     success=True,
-        #     message='login successful',
-        #     data={
-        #         'refresh': str(refresh),
-        #         'access': str(refresh.access_token),
-        #         'user': UserSerializer(user).data},
-        #     status_code=status.HTTP_200_OK
-        # )
     except User.DoesNotExist:
         return Response({
             'error': 'User does not exist'
