@@ -23,6 +23,8 @@ Table Product {
   category_id int [ref: > Category.category_id] // Foreign Key
 }
 
+
+
 Table Product_image {
   image varchar
   order int
