@@ -1,6 +1,13 @@
-from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import Token
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework import serializers
 
+from authentication.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ['password', 'is_deleted', 'groups', 'user_permissions']
 
 class MyTokenObtainSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -13,3 +20,13 @@ class MyTokenObtainSerializer(TokenObtainPairSerializer):
 
         return token
 
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
+
+
+class RegisterSerializer(serializers.Serializer):
+    name = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)

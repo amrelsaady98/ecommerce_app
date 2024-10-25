@@ -2,6 +2,7 @@ Table Category {
   category_id int [pk, increment] // Primary Key
   name varchar
   description varchar
+  icon_image image_field
   is_active boolean
   is_deleted boolean
 }

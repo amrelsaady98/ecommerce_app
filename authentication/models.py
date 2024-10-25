@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_customer(self,  email,password, first_name, last_name, date_of_birth, **kwargs):
+    def create_customer(self,  email,password, first_name, last_name, **kwargs):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -30,14 +30,13 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            date_of_birth=date_of_birth,
         )
 
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self,  email,password, first_name, last_name, date_of_birth, **kwargs):
+    def create_superuser(self,  email, password, first_name, last_name, **kwargs):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -45,7 +44,6 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            date_of_birth=date_of_birth,
         )
 
         user.set_password(password)
@@ -66,7 +64,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=50, null=True)
     username = models.CharField(max_length=50, unique=True, null=True)
     password = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True)
     profile_picture = models.ImageField(upload_to='images/user_profile', null=True)
 
     is_customer = models.BooleanField(default=False)
