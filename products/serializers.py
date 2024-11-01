@@ -24,10 +24,15 @@ class ProductColorSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     product_colors = ProductColorSerializer(many=True, read_only=True)
     product_images = ProductImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Product
-        fields = [ 'product_colors', 'product_images']
-
+        fields = [
+            'product_id', 'code', 'cost_price', 'description', 'image1',
+            'name', 'our_price', 'sale_price', 'has_discount', 'total_rating',
+            'stock_qty', 'year', 'category',
+            'product_colors', 'product_images'
+        ]
         # exclude = ['is_deleted', 'is_active',]
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -35,5 +40,8 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     product_images = ProductImageSerializer(many=True, read_only=True)
     class Meta:
         model = Product
-        fields = ['__all__', 'product_colors', 'product_images']
+        fields = ['product_id', 'code', 'cost_price', 'description', 'image1',
+            'name', 'our_price', 'sale_price', 'has_discount', 'total_rating',
+            'stock_qty', 'year', 'category',
+            'product_colors', 'product_images']
         # exclude = ['is_deleted', 'is_active',]

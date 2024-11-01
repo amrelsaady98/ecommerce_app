@@ -58,12 +58,11 @@ def get_category(request):
 @permission_classes((AllowAny,))
 def get_all_products(request):
     try:
-        products = Product.objects.all()
+        products = Product.objects.filter(is_active=True, is_deleted=False).prefetch_related('product_images', 'product_colors')
+        # for product in products:
+        #     print(product.name, product.product_colors.all(), product.product_images.all())
 
-        for product in products:
-            print(product.name, product.product_colors.all(), product.product_images.all())
-
-        products = Product.objects.filter(is_active=True, is_deleted=False).all()
+        # products = Product.objects.filter(is_active=True, is_deleted=False).all()
         return api_response(
             success=True,
             message='Successfully fetched all products',
